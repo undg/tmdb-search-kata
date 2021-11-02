@@ -10,6 +10,7 @@
     padding: 1rem 0.5rem;
     border: 1px solid var(--offblack);
     border-radius: 0.5rem;
+    width: 100%;
 }
 
 .search__input:focus {

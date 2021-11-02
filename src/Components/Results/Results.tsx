@@ -1,12 +1,8 @@
 import { SearchMoviesResults } from '../../types'
-import './Results.css'
+import './Results.scss'
 import cls from 'classnames'
-import { useState } from 'react'
-
-const animation = {
-    fade: 300,
-    slide: 300,
-}
+import { useEffect, useState } from 'react'
+import {ImagePlaceholderComponent} from './ImagePlaceholder'
 
 export const ResultsComponent: React.FC<{ results?: SearchMoviesResults[] }> = props => {
     if (!props.results) return null
@@ -23,18 +19,30 @@ export const ResultsComponent: React.FC<{ results?: SearchMoviesResults[] }> = p
 }
 
 export const Movie: React.FC<{ movie: SearchMoviesResults; idx: number }> = ({ movie, idx }) => {
+    // @TODO
+    // This variable is magical 💩. It need to be in sync with css animation.
+    // With some extra work, useRef() and window.getComputedStyle()
+    // should be dynamicaly readed from DOM/css
+    const slideTime = 500
+    const liDelaySec = 0
+    const imgDelaySec = slideTime / 1000
+    const timePaddingMs =  150 // smoothening transition between slides
+    const currentSlideDelaySec = (idx * slideTime + timePaddingMs) / 1000
+
     const [loaded, setLoaded] = useState(false)
-    const [slided, setSlided] = useState(false)
 
     const clsWithState = cls('film-list__li', {
-        img_loaded: loaded,
-        slided: slided,
+        'film-list__li--loaded': loaded,
     })
+    useEffect(() => {
+        // setLoaded(true)
+        return setLoaded(true)
+    }, [])
 
-    const Img = () => (movie.backdrop_path ? <img src={createImageUrl(movie.backdrop_path)} alt={movie.title} /> : null)
+    const Img = () => (movie.backdrop_path ? <img src={createImageUrl(movie.backdrop_path)} alt={movie.title} /> : <ImagePlaceholderComponent />)
     return (
-        <li className={clsWithState}>
-            <div className="image">
+        <li className={clsWithState} style={{ transitionDelay: liDelaySec + currentSlideDelaySec + 's' }}>
+            <div className="image" style={{ transitionDelay: imgDelaySec + currentSlideDelaySec + 's' }}>
                 <Img />
             </div>
             <div className="details">
