@@ -1,11 +1,11 @@
-export type SearchMoviesRes = ok | noOk
+export type SearchMoviesResponse = ok // @TODO | noOk
 
 interface ok {
     page?: number
-    results: Results[]
+    results: SearchMoviesResults[]
 }
 
-interface Results {
+export interface SearchMoviesResults {
     poster_path?: string | null
     adult?: boolean
     overview?: string

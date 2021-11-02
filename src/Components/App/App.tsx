@@ -1,13 +1,13 @@
 import { SearchComponent, ResultsComponent } from '..'
-import {useSearch} from '../../hooks'
+import { useSearch } from '../../hooks'
 import './App.css'
 
 export function App() {
-    const {onSubmit, results}  = useSearch()
+    const { response, onSubmit } = useSearch()
     return (
         <div className="App" data-testid="search-wrap">
-            <SearchComponent onSubmit={onSubmit}/>
-            <ResultsComponent />
+            <SearchComponent onSubmit={onSubmit} />
+            <ResultsComponent results={response?.results} />
         </div>
     )
 }

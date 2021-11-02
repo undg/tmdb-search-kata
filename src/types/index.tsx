@@ -1,1 +1,1 @@
-export * from './SearchMoviesRes'
+export * from './SearchMoviesResponse'

@@ -1,17 +1,17 @@
 import { FormEvent, useState } from 'react'
 import { createSearchUrl } from '../api'
-import { SearchMoviesRes } from '../types'
+import { SearchMoviesResponse } from '../types'
 
 export function useSearch() {
-    const [results, setResults] = useState<SearchMoviesRes | null>()
+    const [response, setResponse] = useState<SearchMoviesResponse>()
 
     function onSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
         const url = createSearchUrl({ query: 'frozen' })
         fetch(url)
             .then(res => res.json())
-            .then(setResults)
+            .then(setResponse)
     }
 
-    return { results, onSubmit }
+    return { response, onSubmit }
 }
