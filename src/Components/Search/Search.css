@@ -1,0 +1,32 @@
+.search__form {
+    display: grid;
+    grid-template-columns: 1fr 60px;
+    align-items: center;
+    grid-gap: 0.5rem;
+}
+
+.search__input {
+    margin: 2rem auto;
+    padding: 1rem 0.5rem;
+    border: 1px solid var(--offblack);
+    border-radius: 0.5rem;
+}
+
+.search__input:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    --tw-border-opacity: 1;
+    border-color: rgba(16, 185, 129, var(--tw-border-opacity));
+}
+
+.search-btn {
+    background: var(--color2);
+    border: var(--offblack);
+}
+
+.svg_magnifier {
+    stroke-width: 15;
+    fill: none;
+    stroke-linecap: butt;
+    stroke: var(--offblack);
+}
