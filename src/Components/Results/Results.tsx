@@ -3,12 +3,10 @@ import cls from 'classnames'
 import './Results.scss'
 import { createImageUrl, Movie } from './../../api'
 import { ImagePlaceholderComponent, ModalComponent, SingleMovieComponent } from './..'
+import { useRenderCounter } from '../../hooks'
 
 export const ResultsComponent: React.FC<{ results?: Movie[] }> = ({ results = [] }) => {
-    const [renderCount, setRenderCount] = useState(0)
-    useEffect(() => {
-        setRenderCount(old => old + 1)
-    }, [results])
+    const { renderCount } = useRenderCounter(results)
 
     if (!results.length) return null
 
@@ -33,6 +31,13 @@ export const MovieComponent: React.FC<{ movie: Movie; idx: number; numberOfEleme
     idx,
     numberOfElements,
 }) => {
+    const [isOpenModal, setOpenModal] = useState(false)
+
+    const [isLoaded, setLoaded] = useState(false)
+    useEffect(() => {
+        setLoaded(true)
+    }, [])
+
     // @TODO
     // `slideTime` is magical variable 💩. It need to be in sync with css animation.
     // With some extra work, useRef() and window.getComputedStyle()
@@ -44,16 +49,9 @@ export const MovieComponent: React.FC<{ movie: Movie; idx: number; numberOfEleme
     const currentSlideDelaySec = (idx * slideTime + timePaddingMs) / 1000
     const dateDelaySec = (numberOfElements * (slideTime * 2 + timePaddingMs)) / 1000
 
-    const [loaded, setLoaded] = useState(false)
-    const [isOpenModal, setOpenModal] = useState(false)
-
     const clsWithState = cls('film-list__li', {
-        'film-list__li--loaded': loaded,
+        'film-list__li--loaded': isLoaded,
     })
-    useEffect(() => {
-        setLoaded(true)
-        return setLoaded(true)
-    }, [])
 
     const Img = () =>
         movie.backdrop_path ? (
