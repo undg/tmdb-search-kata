@@ -4,21 +4,35 @@ import './Results.scss'
 import { createImageUrl, Movie } from './../../api'
 import { ImagePlaceholderComponent, ModalComponent, SingleMovieComponent } from './..'
 
-export const ResultsComponent: React.FC<{ results?: Movie[] }> = ({results = []}) => {
+export const ResultsComponent: React.FC<{ results?: Movie[] }> = ({ results = [] }) => {
+    const [renderCount, setRenderCount] = useState(0)
+    useEffect(() => {
+        setRenderCount(old => old + 1)
+    }, [results])
+
     if (!results.length) return null
 
     return (
         <div className="film-list" data-testid="ResultsComponent">
             <ul className="film-list__ul">
                 {results.map((movie, idx) => (
-                    <MovieComponent key={movie.id} movie={movie} idx={idx} numberOfElements={results.length + 1} />
+                    <MovieComponent
+                        key={`${renderCount}_${movie.id!}`}
+                        movie={movie}
+                        idx={idx}
+                        numberOfElements={results.length + 1}
+                    />
                 ))}
             </ul>
         </div>
     )
 }
 
-export const MovieComponent: React.FC<{ movie: Movie; idx: number; numberOfElements: number }> = ({ movie, idx, numberOfElements }) => {
+export const MovieComponent: React.FC<{ movie: Movie; idx: number; numberOfElements: number }> = ({
+    movie,
+    idx,
+    numberOfElements,
+}) => {
     // @TODO
     // `slideTime` is magical variable 💩. It need to be in sync with css animation.
     // With some extra work, useRef() and window.getComputedStyle()
