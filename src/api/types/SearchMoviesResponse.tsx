@@ -2,10 +2,10 @@ export type SearchMoviesResponse = ok // @TODO | noOk
 
 interface ok {
     page?: number
-    results: SearchMoviesResults[]
+    results: Movie[]
 }
 
-export interface SearchMoviesResults {
+export interface Movie {
     poster_path?: string | null
     adult?: boolean
     overview?: string

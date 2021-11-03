@@ -1,6 +1,6 @@
 import { FormEvent, useState } from 'react'
 import { createSearchUrl } from '../api'
-import { SearchMoviesResponse } from '../types'
+import { SearchMoviesResponse } from './../api'
 
 export function useSearch() {
     const [response, setResponse] = useState<SearchMoviesResponse>()
