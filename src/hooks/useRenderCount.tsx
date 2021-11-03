@@ -4,7 +4,7 @@ import { Movie } from './../api'
 export function useRenderCounter(results: Movie[]) {
     const [renderCount, setRenderCount] = useState(0)
     useEffect(() => {
-        setRenderCount(old => old + 1)
+        if (results.length) setRenderCount(old => old + 1)
     }, [results])
 
     return { renderCount }
